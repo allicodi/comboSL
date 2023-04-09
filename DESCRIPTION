@@ -1,0 +1,10 @@
+Package: comboSL
+Title: Temp title combining packages
+Description: Package combining Huber Loss based SL and twostageSL
+Imports: stats
+Depends: R (>= 3.0.0), SuperLearner
+Version: 0.0.1
+Encoding: UTF-8
+RoxygenNote: 6.1.1
+Author: Allison Codi <allison.codi@emory.edu>
+Maintainer: Allison Codi <allison.codi@emory.edu>
