@@ -13,7 +13,7 @@
 #' @importFrom stats glm
 #' @return
 #' \describe{
-#'  \item{\code{computeCoef}}{List with three elements: (i) coef: weights for each algorithm, (ii) cvRisk: the V-fold CV risk for each algorithm, (iii) optimizer: (optional) result object from weight optimization}}
+#'  \item{\code{computeCoef}}{List with three elements: (i) coef: weights for each algorithm, (ii) cvRisk: the V-fold CV risk for each algorithm, (iii) optimizer: (optional) result object from weight optimization}
 #'  \item{\code{computePred}}{Super learner predicted values}
 #' }
 #'
