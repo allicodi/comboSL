@@ -1,6 +1,6 @@
 #' Method for generating weights (coefficients) under Huber Loss: scaled quadratic programming
 #'
-#' @param Z A \code{data.frame} constituting the predictions on test data
+#' @param Z A \code{data.frame} with predictions on test data for each learner
 #' @param Y A numeric outcome variable
 #' @param libraryNames A list of learners to use for prediction
 #' @param verbose True if printing fit (not currently used)
