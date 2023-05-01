@@ -7,7 +7,7 @@
 method.CC_HUBER()
 }
 \arguments{
-\item{Z}{A \code{data.frame} constituting the predictions on test data}
+\item{Z}{A \code{data.frame} with predictions on test data for each learner}
 
 \item{Y}{A numeric outcome variable}
 
@@ -25,7 +25,7 @@ method.CC_HUBER()
 }
 \value{
 \describe{
- \item{\code{computeCoef}}{List with three elements: (i) coef: weights for each algorithm, (ii) cvRisk: the V-fold CV risk for each algorithm, (iii) optimizer: (optional) result object from weight optimization}
+ \item{\code{computeCoef}}{List with three elements: (i) coef: weights for each algorithm, (ii) cvRisk: the V-fold CV risk for each algorithm, (iii) optimizer: result object from weight optimization}
  \item{\code{computePred}}{Super learner predicted values}
 }
 }
