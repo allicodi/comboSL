@@ -40,7 +40,7 @@ SL.twostg <- function(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.glm"),
 
 #' @title Helper function for creating 2 stage libraries
 #' 
-#' @description makeTwoStg uses the string returned by this function as a template for creating two stage learner functions.
+#' @description SL.twostg uses the string returned by this function as a template for creating two stage learner functions.
 #' Gsub is used to substitute the names of the desired learners in for "STG1_FN" and "STG2_FN".
 #' 
 #' @return character string to be used as function
