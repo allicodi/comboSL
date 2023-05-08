@@ -11,6 +11,21 @@
 #' 
 #' @export 
 #' 
+#' @examples 
+#' #simulate data
+#' Y <- rnorm(100)
+#' X <- data.frame(X=rnorm(100), Z=rnorm(100))
+#' 
+#' # create two stage libraries for SL.glm (1) and SL.ranger (2), SL.glm (1) and SL.glm (2)
+#' twostg_libnames <- SL.twostg(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.glm"), twostg_env = .GlobalEnv)
+#' 
+#' #fit SuperLearner using newly created two-stage libraries
+#' fit <- SuperLearner(Y=Y, X=X, SL.library = twostg_libnames)
+#' 
+#' # get back predictions on new data
+#' newX <- data.frame(X=rnorm(100), Z=rnorm(100))
+#' pred_twostg <- predict(fit, newX)
+#' 
 SL.twostg <- function(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.glm"), twostg_env = .GlobalEnv) {
     
     #get template function
@@ -71,6 +86,8 @@ make_template <- function(){
 #' @param object SL.twostg object
 #' @param newdata Dataframe to generate predictions
 #' @param ... unused additional arguments
+#' 
+#' @return pred predictions on newX
 #' 
 #' @export
 predict.SL.twostg <- function(object, newdata, ...) {

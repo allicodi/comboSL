@@ -13,6 +13,9 @@
 
 \item{...}{unused additional arguments}
 }
+\value{
+pred predictions on newX
+}
 \description{
 Prediction for SL.twostg
 }

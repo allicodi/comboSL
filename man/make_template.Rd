@@ -10,6 +10,6 @@ make_template()
 character string to be used as function
 }
 \description{
-makeTwoStg uses the string returned by this function as a template for creating two stage learner functions.
+SL.twostg uses the string returned by this function as a template for creating two stage learner functions.
 Gsub is used to substitute the names of the desired learners in for "STG1_FN" and "STG2_FN".
 }
