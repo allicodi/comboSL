@@ -11,9 +11,9 @@ SL.twostg(
 )
 }
 \arguments{
-\item{stg1_fn}{list of stage 1 function(s)}
+\item{stg1_fn}{list of stage 1 function(s) (binomial family)}
 
-\item{stg2_fn}{list of stage 2 function(s)}
+\item{stg2_fn}{list of stage 2 function(s) (gaussian family)}
 
 \item{environment}{to create functions within, default to global environment}
 }

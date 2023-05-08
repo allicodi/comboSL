@@ -3,8 +3,8 @@
 #' 
 #' @description Used to create two stage functions for SuperLearner
 #' 
-#' @param stg1_fn list of stage 1 function(s)
-#' @param stg2_fn list of stage 2 function(s)
+#' @param stg1_fn list of stage 1 function(s) (binomial family)
+#' @param stg2_fn list of stage 2 function(s) (gaussian family)
 #' @param environment to create functions within, default to global environment
 #' 
 #' @return list of newly created library names in format "SL.stg1.STG1NAME__stg2.STG2NAME"
@@ -60,7 +60,7 @@ SL.twostg <- function(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.glm"),
 #' 
 #' @return character string to be used as function
 #' 
-#' @noexport 
+#' @keywords internal
 #'
 make_template <- function(){
     template_fn <- "
