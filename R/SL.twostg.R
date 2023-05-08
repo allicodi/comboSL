@@ -1,10 +1,22 @@
 
+#' @title Create two stage functions
+#' 
+#' @description Used to create two stage functions for SuperLearner
+#' 
+#' @param stg1_fn list of stage 1 function(s)
+#' @param stg2_fn list of stage 2 function(s)
+#' @param environment to create functions within, default to global environment
+#' 
+#' @return list of newly created library names in format "SL.stg1.STG1NAME__stg2.STG2NAME"
+#' 
+#' @export 
+#' 
+SL.twostg <- function(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.glm"), twostg_env = .GlobalEnv) {
+    
+    #get template function
+    template_fn <- make_template()
 
-SL.makeTwoStg <- function(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.glm"), template_fn) {
-    #create new environment for two stage functions
-    twostg_env <- new.env() #maybe move
-    assign("twostg_env", twostg_env, .GlobalEnv)
-
+    #create libraries
     SL.library_names <- NULL
     for (s1 in stg1_fn){
         for (s2 in stg2_fn){   
@@ -22,25 +34,45 @@ SL.makeTwoStg <- function(stg1_fn = c("SL.glm", "SL.ranger"), stg2_fn = c("SL.gl
         }
     }
 
-    #attach environment so custom learners can be accessed
-    attach(twostg_env)
+    #return names of libraries
     return(SL.library_names)
-
 }
 
-template_fn <- "
-new_fn <- function(Y, X, newX, family, obsWeights, ...){
-    stg1_output <- STG1_FN(Y = as.numeric(Y > 0), X = X, newX = newX, family = binomial(), obsWeights = obsWeights, ...)
-    stg2_output <- STG2_FN(Y = Y[Y > 0], X = X[Y > 0, , drop = FALSE], newX = newX, family = gaussian(), obsWeights = obsWeights[Y > 0],  ...)
-    # E[Y | X] = P(Y > 0 | X) * E[Y | Y > 0, X]
-    pred <- stg1_output$pred * stg2_output$pred
-    fit <- list(stg1_fit = stg1_output$fit,
-        stg2_fit = stg2_output$fit)
-    class(fit) <- 'SL.twostg'             
-    return(list(pred = pred, fit = fit))
+#' @title Helper function for creating 2 stage libraries
+#' 
+#' @description makeTwoStg uses the string returned by this function as a template for creating two stage learner functions.
+#' Gsub is used to substitute the names of the desired learners in for "STG1_FN" and "STG2_FN".
+#' 
+#' @return character string to be used as function
+#' 
+#' @noexport 
+#'
+make_template <- function(){
+    template_fn <- "
+    new_fn <- function(Y, X, newX, family, obsWeights, ...){
+        stg1_output <- STG1_FN(Y = as.numeric(Y > 0), X = X, newX = newX, family = binomial(), obsWeights = obsWeights, ...)
+        stg2_output <- STG2_FN(Y = Y[Y > 0], X = X[Y > 0, , drop = FALSE], newX = newX, family = gaussian(), obsWeights = obsWeights[Y > 0],  ...)
+        # E[Y | X] = P(Y > 0 | X) * E[Y | Y > 0, X]
+        pred <- stg1_output$pred * stg2_output$pred
+        fit <- list(stg1_fit = stg1_output$fit,
+            stg2_fit = stg2_output$fit)
+        class(fit) <- 'SL.twostg'             
+        return(list(pred = pred, fit = fit))
+    }
+    "
+    return(template_fn)
 }
-"
 
+
+#' 
+#' @title Prediction for SL.twostg
+#' @description Prediction for SL.twostg
+#' 
+#' @param object SL.twostg object
+#' @param newdata Dataframe to generate predictions
+#' @param ... unused additional arguments
+#' 
+#' @export
 predict.SL.twostg <- function(object, newdata, ...) {
     # predict from object$stg1_fit
     stg1_predict <- predict(
