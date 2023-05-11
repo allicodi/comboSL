@@ -21,6 +21,19 @@ method.CC_HUBER <- function() {
   computeCoef = function(Z, Y, libraryNames, verbose,lambda,
                          obsWeights=rep(1, length(Y)),
                          errorsInLibrary = NULL, ...) {
+
+
+
+    # look at Y minus Yhat residuals, figure out lambda based on residuals   
+    # nlambda = input? specifying number of lambdas to search over
+    # 
+    # lambda_grid <- 
+    #    # find CV errors (|y - yhat|)
+    #    apply(Z, 2, function(x){ abs(x - Y) }) %>% 
+    #    # turn into vector
+    #    c() %>% 
+    #    # look at quantiles of errors
+    #    quantile(p = seq(0.01, 0.99, length = nlambda))                 
     # compute cvRisk
     cvRisk <- apply(Z, 2, function(x) 
       mean(ifelse((abs(Y-x) > 10000*lambda),
